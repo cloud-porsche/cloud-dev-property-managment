@@ -1,3 +1,16 @@
+## Guide
+
+- Use pnpm for package management. Install it globally with `npm install -g pnpm`.
+- Use Prettier for code formatting. The configuration is in the `.prettierrc` file.
+- Tested with Node `>=20.12`
+
+### IDE Configurations
+
+#### IntelliJ IDEA
+
+![./img/actions_on_save_idea.png](./img/actions_on_save_idea.png)
+
+___
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
 </p>
