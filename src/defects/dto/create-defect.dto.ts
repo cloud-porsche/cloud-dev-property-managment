@@ -1,13 +1,9 @@
-export class CreateDefectDto {
-  constructor(
-    readonly name: string,
-    readonly location: string,
-    readonly descriptionShort: string,
-    readonly descriptionLong: string,
-  ) {
-    this.name = name;
-    this.location = location;
-    this.descriptionShort = descriptionShort;
-    this.descriptionLong = descriptionLong;
-  }
-}
+import { PickType } from '@nestjs/mapped-types';
+import { Defect } from '../entities/defect.entity';
+
+export class CreateDefectDto extends PickType(Defect, [
+  'name',
+  'location',
+  'descriptionShort',
+  'descriptionLong',
+] as const) {}
