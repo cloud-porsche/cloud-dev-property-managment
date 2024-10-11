@@ -1,44 +1,34 @@
 import { Injectable } from '@nestjs/common';
 import { CreateDefectDto } from './dto/create-defect.dto';
 import { UpdateDefectDto } from './dto/update-defect.dto';
-import { Defect, DefectStates } from './entities/defect.entity';
-import { UUID } from 'node:crypto';
+import { Defect } from './entities/defect.entity';
+import { Repository } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class DefectsService {
-  defects: Defect[] = [];
+  constructor(
+    @InjectRepository(Defect)
+    private defectRepository: Repository<Defect>,
+  ) {}
 
   create(createDefectDto: CreateDefectDto) {
-    const defect: Defect = {
-      ...createDefectDto,
-      id: crypto.randomUUID(),
-      status: DefectStates.OPEN,
-      reportedDate: new Date(),
-    };
-    return this.defects.push(defect);
+    return this.defectRepository.save(new Defect(createDefectDto));
   }
 
   findAll() {
-    return this.defects;
+    return this.defectRepository.find();
   }
 
-  findOne(id: UUID) {
-    return this.defects.find((defect) => defect.id === id);
+  findOne(id: number) {
+    return this.defectRepository.findOneBy({ id });
   }
 
-  update(id: UUID, updateDefectDto: UpdateDefectDto) {
-    const affectedDefect = this.defects.find((defect) => defect.id === id);
-    if (!affectedDefect) {
-      throw new Error('Defect does not exist');
-    }
-    return Object.assign(affectedDefect, updateDefectDto);
+  update(id: number, updateDefectDto: UpdateDefectDto) {
+    return this.defectRepository.update(id, updateDefectDto);
   }
 
-  remove(id: UUID) {
-    const defectIndex = this.defects.findIndex((defect) => defect.id === id);
-    if (defectIndex === -1) {
-      throw new Error('Defect does not exist');
-    }
-    return this.defects.splice(defectIndex, 1);
+  remove(id: number) {
+    return this.defectRepository.delete(id);
   }
 }

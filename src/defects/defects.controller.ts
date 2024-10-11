@@ -1,16 +1,15 @@
 import {
-  Controller,
-  Get,
-  Post,
   Body,
-  Patch,
-  Param,
+  Controller,
   Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
 } from '@nestjs/common';
 import { DefectsService } from './defects.service';
 import { CreateDefectDto } from './dto/create-defect.dto';
 import { UpdateDefectDto } from './dto/update-defect.dto';
-import { UUID } from 'node:crypto';
 
 @Controller('defects')
 export class DefectsController {
@@ -27,17 +26,17 @@ export class DefectsController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: UUID) {
+  findOne(@Param('id') id: number) {
     return this.defectsService.findOne(id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: UUID, @Body() updateDefectDto: UpdateDefectDto) {
+  update(@Param('id') id: number, @Body() updateDefectDto: UpdateDefectDto) {
     return this.defectsService.update(id, updateDefectDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: UUID) {
+  remove(@Param('id') id: number) {
     return this.defectsService.remove(id);
   }
 }
